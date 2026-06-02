@@ -13,6 +13,7 @@ export PATH="$HOME/build/void-packages:$PATH"
 alias config='/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
 alias ls='ls --color=auto'
 alias lsa='ls -lah --color=auto'
-alias f='fastfetch'
+alias f='ufetch'
+alias cls='clear && f'
 PS1='\[\e[35;1m\]\u\[\e[39m\]:\[\e[32m\]\h\[\e[0m\] \[\e[3m\]\w\[\e[0m\] \[\e[35m\]  \[\e[0m\]'
 #PS1='[\u@\h \W]\$ '

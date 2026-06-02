@@ -4,6 +4,7 @@ DWM:
 - statuscmd
 - statuscmd-nosignal-status2d
 - vanitygaps
+- alpha (with custom modifications)
 
 DMENU:
 - center
