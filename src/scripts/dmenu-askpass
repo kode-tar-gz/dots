@@ -1,0 +1,2 @@
+#!/bin/sh
+dmenu -P -c -fn "Hack:size=14" -p "Password:" < /dev/null

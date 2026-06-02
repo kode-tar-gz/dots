@@ -1,0 +1,60 @@
+#!/bin/bash
+
+# Define your dmenu flags here so you only have to change them in one place
+dopts=(-i -c -l 5 -fn "Hack:size=14")
+
+# 1. Prompt for Action
+action=$(printf "Mount\nUnmount" | dmenu "${dopts[@]}" -p "Action:")
+[ -z "$action" ] && exit 1
+
+if [ "$action" = "Mount" ]; then
+
+    # -- MOUNT LOGIC --
+    devices=$(lsblk -lpno NAME,SIZE,TYPE,MOUNTPOINT | awk '$3=="part" && $4=="" {print $1 " ("$2")"}')
+
+    if [ -z "$devices" ]; then
+        echo "No unmounted devices found" | dmenu "${dopts[@]}" -p "Mount:"
+        exit 1
+    fi
+
+    selected=$(echo "$devices" | dmenu "${dopts[@]}" -p "Select drive:")
+    [ -z "$selected" ] && exit 1
+
+    device=$(echo "$selected" | awk '{print $1}')
+
+    target=$(printf "/mnt/usb\n/mnt/data\n/media/external\n/media/endeavour" | dmenu "${dopts[@]}" -p "Mount $device to:")
+    [ -z "$target" ] && exit 1
+
+    sleep 0.2
+    SUDO_ASKPASS="$(command -v dmenu-askpass)" sudo -A mkdir -p "$target"
+    sleep 0.2
+    SUDO_ASKPASS="$(command -v dmenu-askpass)" sudo -A mount "$device" "$target"
+
+    if command -v notify-send >/dev/null 2>&1; then
+        notify-send "Drive Mounted" "$device mapped to $target"
+    fi
+
+elif [ "$action" = "Unmount" ]; then
+
+    # -- UNMOUNT LOGIC --
+    # Find mounted partitions, excluding /, /boot*, /home*, and SWAP
+    devices=$(lsblk -lpno NAME,SIZE,TYPE,MOUNTPOINT | awk '$3=="part" && $4!="" && $4!="/" && $4!~/^\/boot/ && $4!~/^\/home/ && $4!="[SWAP]" {print $1 " ("$2") ["$4"]"}')
+
+    if [ -z "$devices" ]; then
+        echo "No removable devices mounted" | dmenu "${dopts[@]}" -p "Unmount:"
+        exit 1
+    fi
+
+    selected=$(echo "$devices" | dmenu "${dopts[@]}" -p "Select drive to unmount:")
+    [ -z "$selected" ] && exit 1
+
+    device=$(echo "$selected" | awk '{print $1}')
+
+    sleep 0.2
+    SUDO_ASKPASS="$(command -v dmenu-askpass)" sudo -A umount "$device"
+
+    if command -v notify-send >/dev/null 2>&1; then
+        notify-send "Drive Unmounted" "$device has been unmounted"
+    fi
+
+fi

@@ -1,0 +1,11 @@
+[general]
+import = [
+"~/.config/alacritty/horizon.toml",
+]
+
+[font]
+normal                = { family = "HackNerdFont", style = "Regular" }
+bold                  = { family = "HackNerdFont", style = "Bold" }
+italic                = { family = "HackNerdFont", style = "Italic" }
+bold_italic           = { family = "HackNerdFont", style = "Bold Italic" }
+size                  = 12

@@ -1,0 +1,14 @@
+#!/bin/bash
+
+TIMESTAMP=$(date +'%Y-%m-%d_%H-%M-%S')
+FILE_PATH="/tmp/screenshot_${TIMESTAMP}.png"
+
+scrot -s "$FILE_PATH"
+
+if [ -f "$FILE_PATH" ]; then
+    cat "$FILE_PATH" | xclip -selection clipboard -t image/png
+
+    notify-send "Screenshot Captured" "Saved to $FILE_PATH\nCopied to clipboard."
+else
+    echo "Screenshot canceled or failed."
+fi

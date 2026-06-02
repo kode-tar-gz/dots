@@ -1,0 +1,8 @@
+#!/bin/sh
+# in the future: add upload and download speed
+WIFI_STATE=$(cat /sys/class/net/enp2s0/operstate)
+if [ "$WIFI_STATE" = "up" ]; then
+    printf "^c#a3be8c^ ^d^\n" # Uses status2d color code
+else
+    printf "^c#bf616a^ ^d^\n"
+fi

@@ -1,0 +1,31 @@
+#!/bin/sh
+
+# Define the options with newline characters
+options="Logout\nSleep\nReboot\nShutdown"
+
+# Pipe the options into dmenu.
+# -i makes it case insensitive. -p sets the prompt text.
+choice=$(printf "Logout\nSleep\nReboot\nShutdown" | dmenu -i -c -l 4 -fn "Hack:size=14" -p "System:")
+
+# Execute the command based on the selection
+case "$choice" in
+    "Logout")
+        # Safely kills the X session by terminating dwm
+	touch /tmp/dwm.exit
+        killall dwm
+        ;;
+    "Sleep")
+        # Standard Void Linux suspend-to-RAM command
+        sudo zzz
+        ;;
+    "Reboot")
+        sudo shutdown -r now
+        ;;
+    "Shutdown")
+        sudo shutdown -h now
+        ;;
+    *)
+        # Exit gracefully if the user presses Escape
+        exit 0
+        ;;
+esac

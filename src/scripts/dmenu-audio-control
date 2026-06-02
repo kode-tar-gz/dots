@@ -1,0 +1,18 @@
+#!/bin/sh
+
+# Define options
+options="Volume Up (+5%%)\nVolume Down (-5%%)\nMute Toggle\nChange Output Sink\nExit"
+
+# Pipe to dmenu
+choice=$(printf "$options" | dmenu -i -c -l 4 -fn "Hack:size=14" -p "Audio Options:")
+
+case "$choice" in
+    "Volume Up (+5%)") amixer set Master 5%+ && pkill -RTMIN+10 dwmblocks ;;
+    "Volume Down (-5%)") amixer set Master 5%- && pkill -RTMIN+10 dwmblocks ;;
+    "Mute Toggle") amixer set Master toggle && pkill -RTMIN+10 dwmblocks ;;
+    "Change Output Sink")
+        # Advanced: List available sinks, pass to dmenu, and set default
+        # Requires knowing if you use PulseAudio or Pipewire
+        ;;
+    *) exit 0 ;;
+esac

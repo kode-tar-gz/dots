@@ -1,0 +1,29 @@
+#!/bin/sh
+
+# Read the first line of /proc/stat (total CPU usage counters)
+read -r _ user nice system idle iowait irq softirq steal _ < /proc/stat
+
+# Calculate total idle time and total CPU time for the first sample
+idle_1=$((idle + iowait))
+total_1=$((user + nice + system + idle + iowait + irq + softirq + steal))
+
+# Sleep for a fraction of a second to get a differential
+sleep 0.5
+
+# Read the counters again
+read -r _ user nice system idle iowait irq softirq steal _ < /proc/stat
+
+# Calculate the second sample
+idle_2=$((idle + iowait))
+total_2=$((user + nice + system + idle + iowait + irq + softirq + steal))
+
+# Calculate the differences
+idle_diff=$((idle_2 - idle_1))
+total_diff=$((total_2 - total_1))
+
+# Calculate the percentage
+# Multiply by 100 first to avoid floating point math in standard shell
+usage=$(( 100 * (total_diff - idle_diff) / total_diff ))
+
+# Output to the bar (You can add status2d color tags here if you want)
+printf "^c#b877db^ ^d^%d%%\n" "$usage"
