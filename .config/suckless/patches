@@ -1,0 +1,10 @@
+DWM:
+- attachaside
+- status2d
+- statuscmd
+- statuscmd-nosignal-status2d
+- vanitygaps
+
+DMENU:
+- center
+- password

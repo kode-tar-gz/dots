@@ -1,0 +1,23 @@
+[global]
+    font = Hack Nerd Font 13
+    frame_width = 2
+    frame_color = "#584da4"
+
+    padding = 10
+    horizontal_padding = 10
+
+[urgency_low]
+    background = "#222222"
+    foreground = "#eeeeee"
+    timeout = 3
+
+[urgency_normal]
+    background = "#222222"
+    foreground = "#eeeeee"
+    timeout = 5
+
+[urgency_critical]
+    background = "#222222"
+    foreground = "#eeeeee"
+    frame_color = "#ff5555"
+    timeout = 0

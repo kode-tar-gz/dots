@@ -9,3 +9,9 @@ bold                  = { family = "HackNerdFont", style = "Bold" }
 italic                = { family = "HackNerdFont", style = "Italic" }
 bold_italic           = { family = "HackNerdFont", style = "Bold Italic" }
 size                  = 12
+
+[cursor]
+style = { shape = "Block", blinking = "On" }
+
+[window]
+opacity = 0.9
