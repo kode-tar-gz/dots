@@ -17,3 +17,6 @@ alias f='ufetch'
 alias cls='clear && f'
 PS1='\[\e[35;1m\]\u\[\e[39m\]:\[\e[32m\]\h\[\e[0m\] \[\e[3m\]\w\[\e[0m\] \[\e[35m\]  \[\e[0m\]'
 #PS1='[\u@\h \W]\$ '
+
+# Load rust stuff
+. "$HOME/.cargo/env"
