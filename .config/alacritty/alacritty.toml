@@ -14,4 +14,4 @@ size                  = 12
 style = { shape = "Block", blinking = "On" }
 
 [window]
-opacity = 0.9
+opacity = 0.8
