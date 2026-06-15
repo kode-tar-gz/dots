@@ -101,7 +101,7 @@ static const Key keys[] = {
 	/* modifier                     key        function        argument */
 	{ MODKEY,                       XK_p,      spawn,          {.v = dmenucmd } },
 	{ MODKEY,                       XK_Return, spawn,          {.v = termcmd } },
-	{ MODKEY|ShiftMask,             XK_e,      spawn,          {.v = emacscmd } },
+	{ MODKEY,                       XK_g,      spawn,          {.v = emacscmd } }, // g for GNU!
 	{ MODKEY,                       XK_s,      spawn,          {.v = sysmenucmd } },
 	{ 0,                         XK_Print,  spawn,          {.v = scrshtcmd } },
 	{ MODKEY,                       XK_b,      togglebar,      {0} },
