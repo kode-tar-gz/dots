@@ -2,6 +2,7 @@
 
 # source .profile file for PATH variables
 . ~/.profile
+export QT_QPA_PLATFORMTHEME=qt5ct
 
 emacs --daemon
 
