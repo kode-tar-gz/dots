@@ -12,6 +12,11 @@ picom -b &
 
 dunst &
 
+# Start PipeWire audio servers
+pipewire &
+pipewire-pulse &
+wireplumber &
+
 # Status bar
 while true; do
     NET=$(sb-network)
@@ -29,7 +34,8 @@ while true; do
     sleep 2
 done &
 
-# running and logging dwm
+# running and logging dwm wrapped in a persistent dbus session
+exec dbus-run-session sh -c '
 while true; do
     dwm 2> ~/logs/.dwm.log
 
@@ -38,3 +44,4 @@ while true; do
         break
     fi
 done
+'
