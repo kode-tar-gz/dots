@@ -1,18 +1,35 @@
 #!/bin/sh
 
-# Define options
-options="Volume Up (+5%%)\nVolume Down (-5%%)\nMute Toggle\nChange Output Sink\nExit"
+options="Volume Up (+5%)\nVolume Down (-5%)\nMute Toggle\nChange Output Sink\nExit"
 
-# Pipe to dmenu
-choice=$(printf "$options" | dmenu -i -c -l 4 -fn "Hack:size=14" -p "Audio Options:")
+choice=$(printf "%b" "$options" | dmenu -i -c -l 5 -fn "Hack:size=14" -p "Audio Options:")
 
 case "$choice" in
-    "Volume Up (+5%)") amixer set Master 5%+ && pkill -RTMIN+10 dwmblocks ;;
-    "Volume Down (-5%)") amixer set Master 5%- && pkill -RTMIN+10 dwmblocks ;;
-    "Mute Toggle") amixer set Master toggle && pkill -RTMIN+10 dwmblocks ;;
+    "Volume Up (+5%)")
+        wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%+
+        ;;
+    "Volume Down (-5%)")
+        wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-
+        ;;
+    "Mute Toggle")
+        wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle
+        ;;
     "Change Output Sink")
-        # Advanced: List available sinks, pass to dmenu, and set default
-        # Requires knowing if you use PulseAudio or Pipewire
+        # 1. Parse wpctl status for Sinks
+        # - Extracts lines between Sinks and the next tree branch
+        # - Strips leading tree characters/asterisks
+        # - Removes the trailing volume indicators
+        sinks=$(wpctl status | sed -n '/Sinks:/,/├─/p' | grep -o '[0-9]\+\..*$' | sed 's/ \[vol:.*//')
+
+        # 2. Pass the clean list to dmenu
+        sink_choice=$(printf "%b" "$sinks" | dmenu -i -c -l 5 -fn "Hack:size=14" -p "Select Sink:")
+
+        if [ -n "$sink_choice" ]; then
+            # 3. Extract the node ID (the number before the dot) and set it as default
+            sink_id=$(echo "$sink_choice" | awk -F'.' '{print $1}')
+            wpctl set-default "$sink_id"
+            pkill -RTMIN+10 dwmblocks
+        fi
         ;;
     *) exit 0 ;;
 esac

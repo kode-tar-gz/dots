@@ -23,7 +23,7 @@ while true; do
     CPU=$(sb-cpu)
     RAM=$(sb-memory)
     DISK=$(df -h / | awk 'NR==2 {print $3 "/" $2}')
-    VOL=$(amixer get Master | awk -F'[][]' 'END{ print $2 }')
+    VOL=$(wpctl get-volume @DEFAULT_AUDIO_SINK@ | awk '{printf "%.0f%%%s\n", $2 * 100, ($3 == "[MUTED]" ? " (M)" : "")}')
     DAT=$(date '+%b %d %H:%M')
 
     # 2. Print to the root window
