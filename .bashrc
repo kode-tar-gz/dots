@@ -12,11 +12,6 @@ export PATH="$HOME/bin:$PATH"
 export PATH="$HOME/src/scripts:$PATH"
 export PATH="$HOME/build/void-packages:$PATH"
 
-# i2p services
-export PATH="$HOME/i2p/i2prouter:$PATH"
-export PATH="$HOME/i2p/i2psvc:$PATH"
-# ------------------
-
 # --- Aliases ---
 alias config='/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
 alias ls='ls --color=auto'
