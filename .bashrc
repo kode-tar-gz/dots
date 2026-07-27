@@ -11,6 +11,7 @@ eval "$(fzf --bash)"
 export PATH="$HOME/bin:$PATH"
 export PATH="$HOME/src/scripts:$PATH"
 export PATH="$HOME/build/void-packages:$PATH"
+# ------------------
 
 # --- Aliases ---
 alias config='/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
